@@ -1,6 +1,6 @@
-# Privacy
+# Privacy Policy
 
-BarChaneg runs locally on macOS.
+BarLens runs locally on macOS.
 
 ## Data used
 
@@ -16,3 +16,9 @@ BarChaneg runs locally on macOS.
 - No uploaded menu bar data.
 
 GitHub release downloads are served by GitHub, so GitHub's normal download logging may apply.
+
+## Contact
+
+For privacy questions, open an issue at:
+
+https://github.com/terrychen0811/BarLens/issues

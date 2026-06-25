@@ -2,18 +2,18 @@
 import PackageDescription
 
 let package = Package(
-    name: "BarChaneg",
+    name: "BarLens",
     platforms: [
         .macOS(.v14)
     ],
     products: [
-        .executable(name: "BarChaneg", targets: ["BarChaneg"])
+        .executable(name: "BarLens", targets: ["BarLens"])
     ],
     dependencies: [],
     targets: [
         .executableTarget(
-            name: "BarChaneg",
-            path: "Sources/BarChaneg"
+            name: "BarLens",
+            path: "Sources/BarLens"
         )
     ]
 )

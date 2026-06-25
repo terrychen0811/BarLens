@@ -1,6 +1,6 @@
-# BarChaneg
+# BarLens
 
-BarChaneg is a native macOS menu bar utility prototype for tracking and managing apps that may provide menu bar icons.
+BarLens is a native macOS menu bar utility prototype for tracking and managing apps that may provide menu bar icons.
 
 It was built as a small systems/UI project exploring the boundary between public macOS APIs and the private behavior used by full menu bar managers.
 
@@ -19,9 +19,9 @@ It was built as a small systems/UI project exploring the boundary between public
 
 ## Install from release
 
-1. Download `BarChaneg-0.1.0-macOS.zip` from GitHub Releases.
+1. Download `BarLens-0.2.0-macOS.zip` from GitHub Releases.
 2. Unzip it.
-3. Open `BarChaneg.app`.
+3. Open `BarLens.app`.
 
 The release is ad-hoc signed, not Apple-notarized. macOS may require right-clicking the app and choosing Open the first time.
 
@@ -50,7 +50,7 @@ The app opens a window and adds a small `▣` item to the macOS menu bar.
 ## Build a release zip
 
 ```sh
-make package VERSION=0.1.0
+make package VERSION=0.2.0
 ```
 
 The zip is written to `.build/release/`.

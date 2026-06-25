@@ -2,6 +2,12 @@ import AppKit
 import CoreGraphics
 import Foundation
 
+enum AppConstants {
+    static let name = "BarLens"
+    static let supportURL = URL(string: "https://github.com/terrychen0811/BarLens/issues")!
+    static let privacyURL = URL(string: "https://github.com/terrychen0811/BarLens/blob/main/PRIVACY.md")!
+}
+
 enum VisibilityRule: String, Codable, CaseIterable {
     case alwaysShow = "Always Show"
     case hideWhenInactive = "Hide When Inactive"
@@ -55,7 +61,7 @@ final class RulesStore {
 
     init() {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-            .appendingPathComponent("BarChaneg", isDirectory: true)
+            .appendingPathComponent(AppConstants.name, isDirectory: true)
         try? FileManager.default.createDirectory(at: base, withIntermediateDirectories: true)
         rulesURL = base.appendingPathComponent("rules.json")
     }
@@ -195,7 +201,7 @@ final class MenuBarViewController: NSViewController, NSTableViewDataSource, NSTa
     private let windowLabel = NSTextField(labelWithString: "")
     private let tableView = NSTableView()
     private let scrollView = NSScrollView()
-    private let limitationLabel = NSTextField(wrappingLabelWithString: "macOS does not expose a public API to move or hide every third-party menu bar icon. BarChaneg detects visible menu bar windows, tracks likely status-item apps, and applies the controls macOS allows: observe, pin rules, activate, and quit providers.")
+    private let limitationLabel = NSTextField(wrappingLabelWithString: "macOS does not expose a public API to move or hide every third-party menu bar icon. BarLens detects visible menu bar windows, tracks likely status-item apps, and applies the controls macOS allows: observe, pin rules, activate, and quit providers.")
     private var searchField = NSSearchField()
     private var filtered: [CandidateApp] = []
 
@@ -221,7 +227,7 @@ final class MenuBarViewController: NSViewController, NSTableViewDataSource, NSTa
     }
 
     private func buildUI() {
-        let title = NSTextField(labelWithString: "BarChaneg")
+        let title = NSTextField(labelWithString: AppConstants.name)
         title.font = .systemFont(ofSize: 28, weight: .bold)
         title.textColor = .labelColor
 
@@ -466,11 +472,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func installStatusItem() {
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         item.button?.title = "▣"
-        item.button?.toolTip = "BarChaneg"
+        item.button?.toolTip = AppConstants.name
 
         let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "Open BarChaneg", action: #selector(showWindow(_:)), keyEquivalent: "o"))
+        menu.addItem(NSMenuItem(title: "Open BarLens", action: #selector(showWindow(_:)), keyEquivalent: "o"))
         menu.addItem(NSMenuItem(title: "Refresh Scan", action: #selector(refreshScan(_:)), keyEquivalent: "r"))
+        menu.addItem(NSMenuItem(title: "Privacy Policy", action: #selector(openPrivacyPolicy(_:)), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "Support", action: #selector(openSupport(_:)), keyEquivalent: ""))
         menu.addItem(.separator())
         menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
         menu.items.forEach { $0.target = self }
@@ -482,7 +490,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if window == nil {
             let controller = MenuBarViewController(model: model)
             let newWindow = NSWindow(contentViewController: controller)
-            newWindow.title = "BarChaneg"
+            newWindow.title = AppConstants.name
             newWindow.setContentSize(NSSize(width: 760, height: 560))
             newWindow.styleMask = [.titled, .closable, .miniaturizable, .resizable]
             newWindow.isReleasedWhenClosed = false
@@ -496,6 +504,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func refreshScan(_ sender: Any?) {
         model.refresh()
         showWindow(nil)
+    }
+
+    @objc private func openPrivacyPolicy(_ sender: Any?) {
+        NSWorkspace.shared.open(AppConstants.privacyURL)
+    }
+
+    @objc private func openSupport(_ sender: Any?) {
+        NSWorkspace.shared.open(AppConstants.supportURL)
     }
 }
 
